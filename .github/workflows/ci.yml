@@ -1,0 +1,58 @@
+name: CI
+
+# Tests on every push to every branch and on every pull request.
+# Pushes to main run these same jobs through release.yml (tests first, then a new version).
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_call:
+
+concurrency:
+  # A newer push to the same branch cancels the older, still-running check.
+  # (Inside a release run this group is per-release, and releases are already serialized.)
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  macos:
+    name: macOS tests
+    # macOS 26 SDK is needed for the Liquid Glass widget (NSGlassEffectView).
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - run: swift --version
+      - name: Unit + shared fixture tests
+        working-directory: macos
+        run: swift test
+      - name: Build app
+        run: macos/scripts/build-app.sh --universal
+      - name: Render snapshots (demo data)
+        working-directory: macos
+        run: swift build && .build/debug/AIUsage --snapshot build/snapshots --demo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: snapshots-macos
+          path: macos/build/snapshots
+
+  windows:
+    name: Windows tests
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Unit + shared fixture tests
+        working-directory: windows
+        run: dotnet test tests/AIUsage.Core.Tests
+      - name: Build app
+        working-directory: windows
+        run: dotnet build src/AIUsage -c Release
+      - name: Render snapshots (demo data)
+        working-directory: windows
+        run: dotnet run --project src/AIUsage -c Release -- --snapshot ${{ github.workspace }}/windows/snapshots --demo
+      - uses: actions/upload-artifact@v4
+        with:
+          name: snapshots-windows
+          path: windows/snapshots

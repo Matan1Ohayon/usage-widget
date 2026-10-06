@@ -1,0 +1,177 @@
+{
+  "comment": "Shared by the macOS (Swift) and Windows (C#) test suites. Both apps must produce exactly these values and strings.",
+  "timeZone": "Asia/Jerusalem",
+  "claudeUsage": {
+    "fiveHour": {
+      "percent": 23,
+      "time": "14:30"
+    },
+    "weekly": {
+      "percent": 27,
+      "dayAndTime": "Fri 9 Oct, 18:00",
+      "weekdayAndTime": "Fri 18:00"
+    }
+  },
+  "claudeCredentials": {
+    "accessToken": "test-access-token",
+    "plan": "Max",
+    "expiresAtEpoch": 1791300000
+  },
+  "codexUsage": {
+    "plan": "Plus",
+    "fiveHour": {
+      "percent": 25,
+      "resetsAtEpoch": 1791291810
+    },
+    "weekly": {
+      "percent": 31,
+      "resetsAtEpoch": 1791619433
+    }
+  },
+  "codexUsageWeeklyOnly": {
+    "fiveHour": null,
+    "weekly": {
+      "percent": 40,
+      "resetsAtEpoch": 1791619433
+    }
+  },
+  "codexSession": {
+    "plan": "Plus",
+    "fiveHour": {
+      "percent": 73,
+      "resetsAtEpoch": 1791114077
+    },
+    "weekly": {
+      "percent": 11,
+      "resetsAtEpoch": 1791619433
+    }
+  },
+  "levels": [
+    {
+      "percent": 0,
+      "level": "green"
+    },
+    {
+      "percent": 59.9,
+      "level": "green"
+    },
+    {
+      "percent": 60,
+      "level": "yellow"
+    },
+    {
+      "percent": 74.9,
+      "level": "yellow"
+    },
+    {
+      "percent": 75,
+      "level": "red"
+    },
+    {
+      "percent": 100,
+      "level": "red"
+    }
+  ],
+  "countdowns": [
+    {
+      "now": 1791280020,
+      "reset": 1791291180,
+      "text": "3h 06m"
+    },
+    {
+      "now": 1791280020,
+      "reset": 1791445620,
+      "text": "1d 22h"
+    },
+    {
+      "now": 1791280020,
+      "reset": 1791280740,
+      "text": "12m"
+    },
+    {
+      "now": 1791280079,
+      "reset": 1791291180,
+      "text": "3h 06m"
+    },
+    {
+      "now": 1791280080,
+      "reset": 1791291180,
+      "text": "3h 05m"
+    }
+  ],
+  "resetLines": [
+    {
+      "kind": "fiveHour",
+      "now": 1791285750,
+      "reset": 1791291810,
+      "text": "Resets 16:04 (1h 42m)"
+    },
+    {
+      "kind": "weekly",
+      "now": 1791285750,
+      "reset": 1791291810,
+      "text": "Resets Tue 6 Oct, 16:04"
+    },
+    {
+      "kind": "fiveHour",
+      "now": 1791285750,
+      "reset": null,
+      "text": "Starts with your next message"
+    }
+  ],
+  "notifications": [
+    {
+      "provider": "codex",
+      "kind": "fiveHour",
+      "percent": 76,
+      "now": 1791285750,
+      "reset": 1791291810,
+      "title": "Codex · 5-hour limit at 75%",
+      "body": "You've used 76% of your 5-hour limit. Next reset at 16:04 (in 1h 42m)."
+    },
+    {
+      "provider": "claude",
+      "kind": "weekly",
+      "percent": 76,
+      "now": 1791285750,
+      "reset": 1791291810,
+      "title": "Claude · Weekly limit at 75%",
+      "body": "You've used 76% of your weekly limit. Next reset Tue 6 Oct at 16:04 (in 1h 42m)."
+    }
+  ],
+  "dates": [
+    {
+      "epoch": 1789448700,
+      "time": "08:05",
+      "dayAndTime": "Tue 15 Sep, 08:05",
+      "weekdayAndTime": "Tue 08:05",
+      "comment": "fixed English names: Sep, never Sept"
+    },
+    {
+      "epoch": 1798754380,
+      "time": "00:00",
+      "dayAndTime": "Fri 1 Jan, 00:00",
+      "weekdayAndTime": "Fri 00:00",
+      "comment": "23:59:40 rounds into the next day and year"
+    }
+  ],
+  "percents": [
+    {
+      "value": 22.5,
+      "text": "23%",
+      "comment": "half rounds away from zero on both platforms"
+    },
+    {
+      "value": 74.5,
+      "text": "75%"
+    },
+    {
+      "value": 0,
+      "text": "0%"
+    },
+    {
+      "value": 99.4,
+      "text": "99%"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+
+
+# ── Version bump (every push to main publishes a release) ──────────────
+#   (nothing)         → patch  1.0.3 → 1.0.4   fixes, small tweaks
+#   #minor            → minor  1.0.4 → 1.1.0   new features
+#   #major            → major  1.1.0 → 2.0.0   big / breaking changes
+#   [skip release]    → no release, tests only (docs, README, CI)
+# Details: CONTRIBUTING.md

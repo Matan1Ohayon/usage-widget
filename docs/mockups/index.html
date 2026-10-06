@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="he">
+<head>
+<meta charset="utf-8">
+<title>AI Usage — mockups</title>
+<style>
+  :root {
+    --green: #30D158; --yellow: #FFD60A; --red: #FF453A;
+    --label: rgba(255,255,255,.92); --secondary: rgba(255,255,255,.58); --tertiary: rgba(255,255,255,.34);
+    --track: rgba(255,255,255,.10);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font: 13px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    color: var(--label);
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 700px at 15% 10%, #3b4a8a 0%, transparent 60%),
+      radial-gradient(900px 600px at 85% 30%, #7a3b6e 0%, transparent 55%),
+      radial-gradient(900px 700px at 50% 100%, #1f5d63 0%, transparent 60%),
+      #14151c;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 0 32px 64px; }
+  h2 { direction: rtl; font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin: 44px 0 6px; }
+  .note { direction: rtl; color: var(--secondary); margin-bottom: 18px; font-size: 14px; }
+  .row { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; }
+
+  /* ---------- macOS menu bar ---------- */
+  .menubar {
+    position: sticky; top: 0; z-index: 5;
+    height: 30px; display: flex; align-items: center; justify-content: flex-end; gap: 18px;
+    padding: 0 14px; font-size: 13px; font-weight: 500;
+    background: rgba(30,30,36,.55); backdrop-filter: blur(30px) saturate(180%);
+  }
+  .menubar .sys { color: var(--label); opacity: .9 }
+  .mb-item { display: flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 5px; }
+  .mb-item.active { background: rgba(255,255,255,.18); }
+  .mini { display: flex; flex-direction: column; gap: 2px; width: 18px; }
+  .mini i { display: block; height: 4px; border-radius: 2px; background: var(--track); overflow: hidden; }
+  .mini i b { display: block; height: 100%; border-radius: 2px; }
+  .mb-pct { font-variant-numeric: tabular-nums; font-size: 12px; }
+
+  /* ---------- popover / panel material ---------- */
+  .panel {
+    width: 340px; border-radius: 14px; padding: 14px;
+    background: rgba(40,40,48,.62);
+    backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: 0 0 0 .5px rgba(255,255,255,.18) inset, 0 0 0 .5px rgba(0,0,0,.6), 0 24px 60px rgba(0,0,0,.45);
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; padding: 2px 4px 10px; }
+  .panel-head h3 { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
+  .panel-head span { color: var(--tertiary); font-size: 11px; }
+
+  .card { background: rgba(255,255,255,.06); border-radius: 10px; padding: 12px 12px 4px; margin-bottom: 8px; }
+  .card-title { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; margin-bottom: 10px; }
+  .logo { width: 20px; height: 20px; border-radius: 5px; display: grid; place-items: center; font-size: 11px; font-weight: 800; }
+  .logo.claude { background: #D97757; color: #fff; }
+  .logo.codex { background: #fff; color: #000; }
+  .plan { margin-inline-start: auto; color: var(--tertiary); font-weight: 500; font-size: 11px; }
+
+  .meter { margin-bottom: 10px; }
+  .meter-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .meter-name { color: var(--secondary); font-size: 12px; }
+  .meter-pct { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 13px; }
+  .meter-pct small { color: var(--tertiary); font-weight: 500; font-size: 11px; }
+  .bar { height: 8px; border-radius: 4px; background: var(--track); overflow: hidden; position: relative; }
+  .bar b { position: absolute; inset: 0 auto 0 0; border-radius: 4px; }
+  /* threshold ticks at 60 / 75 */
+  .bar::before, .bar::after { content: ""; position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(0,0,0,.35); z-index: 1; }
+  .bar::before { left: 60%; } .bar::after { left: 75%; }
+  .reset { margin-top: 5px; color: var(--tertiary); font-size: 11px; font-variant-numeric: tabular-nums; }
+  .reset strong { color: var(--secondary); font-weight: 600; }
+
+  .g { background: var(--green); } .y { background: var(--yellow); } .r { background: var(--red); }
+  .tg { color: var(--green); } .ty { color: var(--yellow); } .tr { color: var(--red); }
+
+  .panel-foot { display: flex; justify-content: space-between; color: var(--tertiary); font-size: 11px; padding: 6px 4px 0; }
+  .panel-foot a { color: var(--secondary); text-decoration: none; }
+
+  /* ---------- Variant B: compact rows ---------- */
+  .compact { width: 300px; }
+  .crow { display: grid; grid-template-columns: 56px 1fr 40px; gap: 8px; align-items: center; padding: 5px 4px; }
+  .crow .k { color: var(--secondary); font-size: 12px; }
+  .crow .v { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .crow .bar { height: 6px; }
+  .csub { color: var(--tertiary); font-size: 11px; padding: 0 4px 6px 68px; font-variant-numeric: tabular-nums; }
+  .sep { height: .5px; background: rgba(255,255,255,.12); margin: 6px 0; }
+  .sec { font-weight: 600; font-size: 12px; display: flex; gap: 6px; align-items: center; padding: 4px 4px 2px; }
+
+  /* ---------- Variant C: desktop widgets ---------- */
+  .widget {
+    border-radius: 22px; padding: 14px 16px;
+    background: rgba(30,30,38,.55); backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: 0 0 0 .5px rgba(255,255,255,.14) inset, 0 12px 40px rgba(0,0,0,.35);
+  }
+  .w-small { width: 170px; height: 170px; display: flex; flex-direction: column; justify-content: space-between; }
+  .w-medium { width: 360px; height: 170px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .w-head { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; }
+  .w-big { font-size: 30px; font-weight: 700; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .w-cap { color: var(--tertiary); font-size: 10.5px; margin-top: 2px; }
+  .w-line { margin-top: 8px; }
+  .w-line .meter-top { margin-bottom: 3px; }
+  .w-line .bar { height: 6px; }
+
+  /* ---------- Notification ---------- */
+  .notif {
+    width: 360px; border-radius: 16px; padding: 12px 14px; display: flex; gap: 10px;
+    background: rgba(50,50,58,.7); backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: 0 0 0 .5px rgba(255,255,255,.16) inset, 0 12px 40px rgba(0,0,0,.4);
+  }
+  .notif .app-ic { width: 34px; height: 34px; border-radius: 8px; flex: none; display: grid; place-items: center;
+    background: linear-gradient(180deg,#3a3a44,#24242c); box-shadow: 0 0 0 .5px rgba(255,255,255,.2) inset; }
+  .notif .t { font-weight: 600; display: flex; justify-content: space-between; }
+  .notif .t span { color: var(--tertiary); font-weight: 400; font-size: 11px; }
+  .notif .b { color: var(--secondary); font-size: 12.5px; }
+  .notif.he { direction: rtl; }
+  .notif.he .t span { margin-right: auto; }
+  .labels { direction: rtl; color: var(--secondary); font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="menubar">
+  <div class="mb-item active" title="Variant A/B menu bar item">
+    <div class="mini"><i><b class="g" style="width:42%"></b></i><i><b class="r" style="width:78%"></b></i></div>
+    <span class="mb-pct">42%·<span class="tr">78%</span></span>
+  </div>
+  <span class="sys">Tue 6 Oct&nbsp; 11:24</span>
+</div>
+
+<div class="page">
+
+  <h2>מה רואים בדוק העליון (Menu Bar)</h2>
+  <p class="note">אייקון קטן: שני מיני-ברים (עליון = Claude, תחתון = Codex) + האחוז של חלון ה-5 שעות. הצבע מתעדכן לפי הסף. אפשר גם גרסה עם אייקון בלבד בלי מספרים.</p>
+  <div class="row">
+    <div class="mb-item" style="background:rgba(30,30,36,.6);border-radius:6px;padding:6px 10px">
+      <div class="mini"><i><b class="g" style="width:42%"></b></i><i><b class="r" style="width:78%"></b></i></div>
+      <span class="mb-pct">42%·<span class="tr">78%</span></span>
+    </div>
+    <div class="mb-item" style="background:rgba(30,30,36,.6);border-radius:6px;padding:6px 10px">
+      <div class="mini"><i><b class="y" style="width:66%"></b></i><i><b class="g" style="width:20%"></b></i></div>
+    </div>
+    <div class="mb-item" style="background:rgba(30,30,36,.6);border-radius:6px;padding:6px 10px">
+      <span class="mb-pct">C <span class="ty">66%</span> · X <span class="tg">20%</span></span>
+    </div>
+  </div>
+
+  <!-- ===================== A ===================== -->
+  <h2>דוגמה A — דשבורד שנפתח בלחיצה על האייקון (מפורט)</h2>
+  <p class="note">כרטיס לכל AI, שני ברים לכל אחד. ב-5 שעות: שעה מדויקת של האיפוס + כמה זמן נשאר. ב-Weekly: יום, תאריך ושעה. הקווים הדקים בתוך הבר מסמנים את הספים 60% ו-75%.</p>
+  <div class="row">
+    <div class="panel">
+      <div class="panel-head"><h3>AI Usage</h3><span>Updated 11:24</span></div>
+
+      <div class="card">
+        <div class="card-title"><div class="logo claude">✳</div>Claude<span class="plan">Max</span></div>
+        <div class="meter">
+          <div class="meter-top"><span class="meter-name">5-hour session</span><span class="meter-pct">42<small>%</small></span></div>
+          <div class="bar"><b class="g" style="width:42%"></b></div>
+          <div class="reset">Resets at <strong>14:30</strong> · in 3h 06m</div>
+        </div>
+        <div class="meter">
+          <div class="meter-top"><span class="meter-name">Weekly</span><span class="meter-pct ty">68<small>%</small></span></div>
+          <div class="bar"><b class="y" style="width:68%"></b></div>
+          <div class="reset">Resets <strong>Thu, 8 Oct · 10:00</strong> · in 1d 22h</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><div class="logo codex">❯_</div>Codex<span class="plan">Plus</span></div>
+        <div class="meter">
+          <div class="meter-top"><span class="meter-name">5-hour session</span><span class="meter-pct tr">78<small>%</small></span></div>
+          <div class="bar"><b class="r" style="width:78%"></b></div>
+          <div class="reset">Resets at <strong>13:05</strong> · in 1h 41m</div>
+        </div>
+        <div class="meter">
+          <div class="meter-top"><span class="meter-name">Weekly</span><span class="meter-pct">11<small>%</small></span></div>
+          <div class="bar"><b class="g" style="width:11%"></b></div>
+          <div class="reset">Resets <strong>Mon, 12 Oct · 08:43</strong> · in 5d 21h</div>
+        </div>
+      </div>
+
+      <div class="panel-foot"><a href="#">↻ Refresh</a><a href="#">Settings…</a><a href="#">Quit</a></div>
+    </div>
+
+    <!-- ===================== B ===================== -->
+    <div>
+      <h2 style="margin-top:0">דוגמה B — קומפקטי (שורה לכל בר)</h2>
+      <p class="note" style="max-width:300px">אותו מידע, צפוף יותר — נראה כמו תפריט מערכת רגיל של מק.</p>
+      <div class="panel compact">
+        <div class="sec"><div class="logo claude" style="width:16px;height:16px;font-size:9px">✳</div>Claude</div>
+        <div class="crow"><span class="k">5 hours</span><div class="bar"><b class="g" style="width:42%"></b></div><span class="v">42%</span></div>
+        <div class="csub">Resets 14:30 (3h 06m)</div>
+        <div class="crow"><span class="k">Weekly</span><div class="bar"><b class="y" style="width:68%"></b></div><span class="v ty">68%</span></div>
+        <div class="csub">Resets Thu 8 Oct, 10:00</div>
+        <div class="sep"></div>
+        <div class="sec"><div class="logo codex" style="width:16px;height:16px;font-size:8px">❯_</div>Codex</div>
+        <div class="crow"><span class="k">5 hours</span><div class="bar"><b class="r" style="width:78%"></b></div><span class="v tr">78%</span></div>
+        <div class="csub">Resets 13:05 (1h 41m)</div>
+        <div class="crow"><span class="k">Weekly</span><div class="bar"><b class="g" style="width:11%"></b></div><span class="v">11%</span></div>
+        <div class="csub">Resets Mon 12 Oct, 08:43</div>
+        <div class="sep"></div>
+        <div class="panel-foot" style="padding-top:2px"><span>Updated 11:24</span><a href="#">↻</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== C ===================== -->
+  <h2>דוגמה C — וויגט על שולחן העבודה (Desktop Widget)</h2>
+  <p class="note">וויגט קטן לכל AI, או וויגט בינוני ששם את שניהם זה ליד זה. המספר הגדול = ה-5 שעות (מה שמשתנה הכי מהר).</p>
+  <div class="row">
+    <div class="widget w-small">
+      <div>
+        <div class="w-head"><div class="logo claude" style="width:16px;height:16px;font-size:9px">✳</div>Claude</div>
+      </div>
+      <div>
+        <div class="w-big">42%</div>
+        <div class="w-cap">5h · resets 14:30</div>
+        <div class="bar" style="height:6px;margin-top:6px"><b class="g" style="width:42%"></b></div>
+      </div>
+      <div class="w-line">
+        <div class="meter-top"><span class="meter-name" style="font-size:10.5px">Weekly · Thu 10:00</span><span class="ty" style="font-size:11px;font-weight:600">68%</span></div>
+        <div class="bar"><b class="y" style="width:68%"></b></div>
+      </div>
+    </div>
+
+    <div class="widget w-medium">
+      <div style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="w-head"><div class="logo claude" style="width:16px;height:16px;font-size:9px">✳</div>Claude</div>
+        <div class="w-line"><div class="meter-top"><span class="meter-name" style="font-size:11px">5 hours</span><span style="font-weight:600">42%</span></div>
+          <div class="bar"><b class="g" style="width:42%"></b></div><div class="w-cap">Resets 14:30</div></div>
+        <div class="w-line"><div class="meter-top"><span class="meter-name" style="font-size:11px">Weekly</span><span class="ty" style="font-weight:600">68%</span></div>
+          <div class="bar"><b class="y" style="width:68%"></b></div><div class="w-cap">Resets Thu 8 Oct, 10:00</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="w-head"><div class="logo codex" style="width:16px;height:16px;font-size:8px">❯_</div>Codex</div>
+        <div class="w-line"><div class="meter-top"><span class="meter-name" style="font-size:11px">5 hours</span><span class="tr" style="font-weight:600">78%</span></div>
+          <div class="bar"><b class="r" style="width:78%"></b></div><div class="w-cap">Resets 13:05</div></div>
+        <div class="w-line"><div class="meter-top"><span class="meter-name" style="font-size:11px">Weekly</span><span style="font-weight:600">11%</span></div>
+          <div class="bar"><b class="g" style="width:11%"></b></div><div class="w-cap">Resets Mon 12 Oct, 08:43</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Notification ===================== -->
+  <h2>ההתראה כשמגיעים ל-75%</h2>
+  <p class="note">התראת מערכת רגילה של macOS. נשלחת פעם אחת לכל חלון (לא מציקה שוב עד שהחלון מתאפס). אפשר אנגלית או עברית:</p>
+  <div class="row">
+    <div class="notif">
+      <div class="app-ic"><div class="mini" style="width:20px"><i><b class="r" style="width:78%"></b></i><i><b class="g" style="width:30%"></b></i></div></div>
+      <div style="flex:1">
+        <div class="t">Codex · 5-hour limit at 75%<span>now</span></div>
+        <div class="b">You've used 75% of your 5-hour window. Next reset at 13:05 (in 1h 41m).</div>
+      </div>
+    </div>
+    <div class="notif he">
+      <div class="app-ic"><div class="mini" style="width:20px"><i><b class="r" style="width:78%"></b></i><i><b class="g" style="width:30%"></b></i></div></div>
+      <div style="flex:1">
+        <div class="t">Claude · הגעת ל-75% מהשבועי<span>עכשיו</span></div>
+        <div class="b">ניצלת 75% מהמכסה השבועית. האיפוס הקרוב: יום חמישי 8.10 בשעה 10:00.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>מקרא צבעים</h2>
+  <div class="row" style="direction:rtl;gap:20px;color:var(--secondary)">
+    <span><span class="tg">●</span> ירוק 0–60%</span>
+    <span><span class="ty">●</span> צהוב 60–75%</span>
+    <span><span class="tr">●</span> אדום 75–100% + התראה</span>
+  </div>
+</div>
+</body>
+</html>

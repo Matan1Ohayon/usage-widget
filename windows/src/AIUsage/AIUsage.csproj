@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- Lets the Windows app compile on macOS/Linux too (it still only runs on Windows). -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- WPF and WinForms share type names (Application, Color, Point…): usings are explicit, see GlobalUsings.cs. -->
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>AIUsage</AssemblyName>
+    <RootNamespace>AIUsage</RootNamespace>
+    <Product>AI Usage</Product>
+    <AssemblyTitle>AI Usage</AssemblyTitle>
+    <Description>Claude and Codex usage in the system tray</Description>
+    <Copyright>MIT License</Copyright>
+    <Version>1.0.0</Version>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <StartupObject>AIUsage.Program</StartupObject>
+    <!-- WFO0003 asks WinForms apps to set DPI in code; this is a WPF app, where the manifest is the right place. -->
+    <NoWarn>$(NoWarn);WFO0003</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIUsage.Core\AIUsage.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+.DS_Store
+
+# macOS app
+macos/.build/
+macos/build/
+macos/.swiftpm/
+
+# Windows app
+windows/**/bin/
+windows/**/obj/
+windows/publish/
+windows/snapshots/
+.vs/
+*.user
